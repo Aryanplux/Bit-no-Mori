@@ -19,7 +19,7 @@ project.ext.imguiVersion = '1.81.0'
 
 dependencies {
     // Box2D
-    implementation name: 'jbox2d-library'
+    implementation 'org.jbox2d:jbox2d-library:2.2.1.1'
 
     // JUnit
     testImplementation 'junit:junit:4.13.2'
@@ -68,6 +68,7 @@ tasks.register('copyAssets', Copy) {
 }
 
 tasks.register('fatJar', Jar) {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     manifest.from jar.manifest
     from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }

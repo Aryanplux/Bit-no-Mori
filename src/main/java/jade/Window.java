@@ -3,6 +3,10 @@ import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
+import org.lwjgl.opengl.GL;
+
+import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
+import static org.lwjgl.opengl.GL11.*;
 
 
 public class Window {
@@ -26,7 +30,7 @@ public class Window {
         return Window.window;
     }
     public void run(){
-        System.out.println("Hello LWJGL" + version.getVersion()+ "!");
+        System.out.println("Hello LWJGL " + Version.getVersion() + "!");
 
         init();
         loop();
@@ -67,6 +71,14 @@ public class Window {
 
 
     public void loop(){
+        while(!glfwWindowShouldClose(glfwWindow)){
+            // poll events
+            glfwPollEvents();
 
+            glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+            glClear(GL_COLOR_BUFFER_BIT);
+
+            glfwSwapBuffers(glfwWindow);
+        }
     }
 }
