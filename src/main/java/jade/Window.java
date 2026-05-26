@@ -34,6 +34,14 @@ public class Window {
 
         init();
         loop();
+
+        // Free The Memory
+        glfwFreeCallbacks(glfwWindow);
+        glfwDestroyWindow(glfwWindow);  
+
+        //Terminate GLFW and free the error callback 
+        glfwTerminate();
+        glfwSetErrorCallback(null).free();
     }
     public void init(){
         // Setup an error callback
@@ -56,6 +64,10 @@ public class Window {
             throw new IllegalStateException("Failed to create the GLFW window");
         }
 
+        glfwSetCursorPosCallback(glfwWindow, mouseListener::mousePosCallback);
+        glfwSetMouseButtonCallback(glfwWindow, mouseListener::mouseButtonCallback);
+        glfwSetScrollCallback(glfwWindow, mouseListener::mouseScrollCallback);
+
         // Make the OpenGL context current
         glfwMakeContextCurrent(glfwWindow);
         // Enable v-sync
@@ -75,7 +87,7 @@ public class Window {
             // poll events
             glfwPollEvents();
 
-            glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+            glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT);
 
             glfwSwapBuffers(glfwWindow);
