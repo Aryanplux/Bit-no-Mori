@@ -1,5 +1,7 @@
 package jade;
 
+import static org.lwjgl.glfw.GLFW.*;
+
 public class keyListener {
     private static keyListener instance;
     private boolean keyPressed[] = new boolean[350];
@@ -15,10 +17,13 @@ public class keyListener {
         return keyListener.instance;
     }   
     public static void keyCallback(long window, int key, int scancode, int action, int mods){
-        if(action == 0){ 
-            get().keyPressed[key] = false;
-        }else if(action == 1){ 
+        if(action == GLFW_PRESS){ 
             get().keyPressed[key] = true;
+        }else if(action == GLFW_RELEASE){ 
+            get().keyPressed[key] = false;
         }   
-    }   
+    }  
+    public static boolean isKeyPressed(int keyCode){
+        return get().keyPressed[keyCode];
+    } 
 }
