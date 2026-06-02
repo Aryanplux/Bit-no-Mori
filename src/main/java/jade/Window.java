@@ -33,6 +33,22 @@ public class Window {
         b = 1;
         a = 1;
     }
+
+    public void setR(float r){
+        this.r = r;
+    }
+
+    public void setG(float g){
+        this.g = g;
+    }
+
+    public void setB(float b){
+        this.b = b;
+    }
+
+    public void setA(float a){
+        this.a = a;
+    }
     
     public static void changeScene(int newScene){
         switch(newScene){
@@ -46,6 +62,7 @@ public class Window {
                 break;
              default:
                 assert false : "Unknown scene '" + newScene + "'";    
+                break;
         }
     }
 
