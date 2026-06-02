@@ -17,7 +17,12 @@ public class Window {
     private long glfwWindow;
 
     public float r, g, b, a;
-    private boolean fadeToBlack = false;
+    // Fade controls
+    private boolean fadingToBlack = false;
+    private boolean fadingToWhite = false;
+    private float fadeTimer = 0.0f; // hold time at black
+    private static final float FADE_SPEED = 0.5f; // units per second
+    private static final float FADE_HOLD = 1.0f; // seconds to stay black
 
     private static Window window = null;
 
@@ -137,29 +142,56 @@ public class Window {
 
     public void loop(){
         float beginTime = Time.getTime();
-        float endTime = Time.getTime();  
-        float dt = -1.0f;      
+        float endTime;
+        float dt = 0.0f;
 
-        
         while(!glfwWindowShouldClose(glfwWindow)){
-            // poll events
-            glfwPollEvents();
-
-            glClearColor(r, g, b, a);
-            glClear(GL_COLOR_BUFFER_BIT);  
-
-            if(dt >= 0){
-               currentScene.update(dt);
-            }
-
-            glfwSwapBuffers(glfwWindow);
-
+            // time
             endTime = Time.getTime();
             dt = endTime - beginTime;
             beginTime = endTime;
+
+            // poll events
+            glfwPollEvents();
+
+            // Start fade only if space pressed and not already fading, and currently white
+            if(keyListener.isKeyPressed(GLFW_KEY_SPACE) && !fadingToBlack && !fadingToWhite && r == 1.0f && g == 1.0f && b == 1.0f){
+                fadingToBlack = true;
+            }
+
+            // Handle fading
+            if(fadingToBlack){
+                r = Math.max(r - FADE_SPEED * dt, 0.0f);
+                g = Math.max(g - FADE_SPEED * dt, 0.0f);
+                b = Math.max(b - FADE_SPEED * dt, 0.0f);
+                if(r <= 0.0f && g <= 0.0f && b <= 0.0f){
+                    fadingToBlack = false;
+                    fadeTimer = FADE_HOLD;
+                }
+            } else if(fadeTimer > 0.0f){
+                fadeTimer -= dt;
+                if(fadeTimer <= 0.0f){
+                    fadingToWhite = true;
+                }
+            } else if(fadingToWhite){
+                r = Math.min(r + FADE_SPEED * dt, 1.0f);
+                g = Math.min(g + FADE_SPEED * dt, 1.0f);
+                b = Math.min(b + FADE_SPEED * dt, 1.0f);
+                if(r >= 1.0f && g >= 1.0f && b >= 1.0f){
+                    fadingToWhite = false;
+                }
+            }
+
+            // update scene
             if(currentScene != null){
                 currentScene.update(dt);
             }
+
+            // render
+            glClearColor(r, g, b, a);
+            glClear(GL_COLOR_BUFFER_BIT);
+
+            glfwSwapBuffers(glfwWindow);
         }
     }
 }

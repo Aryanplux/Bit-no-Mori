@@ -12,6 +12,8 @@ public class LevelEditorscene extends Scene{
 
     @Override
     public void update(float dt){
+
+        System.out.println("" + (1.0f / dt) + " fps");
         
         if(!changingScene  && keyListener.isKeyPressed(GLFW_KEY_ESCAPE)){
             changingScene = true;
