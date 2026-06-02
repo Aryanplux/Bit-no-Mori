@@ -1,5 +1,5 @@
 package jade;
-import java.awt.event.KeyEvent;
+import static org.lwjgl.glfw.GLFW.*;
 
 public class LevelEditorscene extends Scene{
 
@@ -7,21 +7,20 @@ public class LevelEditorscene extends Scene{
     private float timeToChange = 2.0f;
 
     public LevelEditorscene(){
-
+        System.out.println("Level Editor Scene");
     }
 
     @Override
     public void update(float dt){
         
-        if(!changingScene  && keyListener.isKeyPressed(KeyEvent.VK_ESCAPE)){
+        if(!changingScene  && keyListener.isKeyPressed(GLFW_KEY_ESCAPE)){
             changingScene = true;
         }
 
         if(changingScene && timeToChange > 0){
             timeToChange -= dt;
-            Window.get().setR(timeToChange / 5.0f);
-            Window.get().setG(timeToChange / 5.0f);
-            Window.get().setB(timeToChange / 5.0f);
+            float c = timeToChange / 5.0f;
+            Window.get().setClearColor(c, c, c, 1.0f);
         }
         else if(changingScene){
             Window.changeScene(1);

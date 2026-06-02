@@ -49,6 +49,13 @@ public class Window {
     public void setA(float a){
         this.a = a;
     }
+
+    public void setClearColor(float r, float g, float b, float a){
+        this.r = r;
+        this.g = g;
+        this.b = b;
+        this.a = a;
+    }
     
     public static void changeScene(int newScene){
         switch(newScene){
@@ -123,12 +130,15 @@ public class Window {
         // This line is critical for LWJGL's interoperation with GLFW's OpenGL context, or any context that is managed externally. LWJGL detects the context that is current in the current thread, creates the GLCapabilities instance and makes the OpenGL bindings available for use.
         GL.createCapabilities();
 
+        Window.changeScene(0);
+
     }
 
 
     public void loop(){
         float beginTime = Time.getTime();
-        float endTime = Time.getTime();        
+        float endTime = Time.getTime();  
+        float dt = -1.0f;      
 
         
         while(!glfwWindowShouldClose(glfwWindow)){
@@ -136,22 +146,16 @@ public class Window {
             glfwPollEvents();
 
             glClearColor(r, g, b, a);
-            glClear(GL_COLOR_BUFFER_BIT);   
-            
-            if(fadeToBlack){
-                r = Math.max(r - 0.01f, 0);
-                g = Math.max(g - 0.01f, 0);
-                b = Math.max(b - 0.01f, 0);
-            }
+            glClear(GL_COLOR_BUFFER_BIT);  
 
-            if(keyListener.isKeyPressed(GLFW_KEY_SPACE)){
-                fadeToBlack = true;
+            if(dt >= 0){
+               currentScene.update(dt);
             }
 
             glfwSwapBuffers(glfwWindow);
 
             endTime = Time.getTime();
-            float dt = endTime - beginTime;
+            dt = endTime - beginTime;
             beginTime = endTime;
             if(currentScene != null){
                 currentScene.update(dt);
