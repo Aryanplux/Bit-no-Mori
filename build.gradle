@@ -1,6 +1,10 @@
 plugins {
     id('java')
 }
+    java {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
 
 group = "org.example"
 version = "1.0-SNAPSHOT"
@@ -54,7 +58,7 @@ jar {
     manifest {
         attributes (
                 'Class-Path': configurations.runtimeClasspath.collect { it.getName() }.join(' '),
-                'Main-Class': 'Main'
+                'Main-Class': 'org.example.Main'
         )
     }
 }

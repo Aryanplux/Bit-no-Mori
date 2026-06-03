@@ -1,31 +1,53 @@
 package jade;
-import static org.lwjgl.glfw.GLFW.*;
 
 public class LevelEditorscene extends Scene{
-
-    private boolean changingScene = false;
-    private float timeToChange = 2.0f;
+    private ShaderManager shaderManager;
+    private EntityManager entityManager;
+    private RenderSystem renderSystem;
 
     public LevelEditorscene(){
-        System.out.println("Level Editor Scene");
+
+    }
+
+    @Override
+    public void init(){
+        shaderManager = new ShaderManager();
+        Shader shader = shaderManager.load("default.glsl");
+
+        entityManager = new EntityManager();
+        renderSystem = new RenderSystem(entityManager);
+
+        // create a simple triangle mesh (pos.xyz + color.rgb)
+        float[] verts = new float[]{
+            // triangle
+            -0.5f, -0.5f, 0.0f,  1f, 0f, 0f,
+             0.5f, -0.5f, 0.0f,  0f, 1f, 0f,
+             0.0f,  0.5f, 0.0f,  0f, 0f, 1f
+        };
+
+        Mesh mesh = new Mesh(verts);
+
+        Entity e = entityManager.createEntity();
+        e.addComponent(new TransformComponent(0,0,0));
+        e.addComponent(new RenderComponent(mesh, shader));
     }
 
     @Override
     public void update(float dt){
-
-        System.out.println("" + (1.0f / dt) + " fps");
-        
-        if(!changingScene  && keyListener.isKeyPressed(GLFW_KEY_ESCAPE)){
-            changingScene = true;
-        }
-
-        if(changingScene && timeToChange > 0){
-            timeToChange -= dt;
-            float c = timeToChange / 5.0f;
-            Window.get().setClearColor(c, c, c, 1.0f);
-        }
-        else if(changingScene){
-            Window.changeScene(1);
-        }
+        shaderManager.update();
+        renderSystem.render();
     }
+
+    @Override
+    public void dispose(){
+        // dispose meshes and shaders
+        for(Entity e : entityManager.getEntities()){
+            if(e.hasComponent(RenderComponent.class)){
+                RenderComponent rc = e.getComponent(RenderComponent.class);
+                try{ rc.mesh.dispose(); } catch(Exception ignored){}
+            }
+        }
+        if(shaderManager != null) shaderManager.dispose();
+    }
+
 }

@@ -63,6 +63,10 @@ public class Window {
     }
     
     public static void changeScene(int newScene){
+        // Dispose previous scene if present
+        if(currentScene != null){
+            currentScene.dispose();
+        }
         switch(newScene){
             case 0:
                 currentScene = new LevelEditorscene();

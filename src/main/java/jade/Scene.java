@@ -6,6 +6,9 @@ public abstract class Scene {
     }
 
     public void init(){
+        
+    }
+    public void dispose(){
 
     }
 
