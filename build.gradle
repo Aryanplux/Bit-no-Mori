@@ -20,6 +20,12 @@ project.ext.lwjglVersion = "3.2.3"
 project.ext.jomlVersion = "1.9.23"
 project.ext.lwjglNatives = "natives-windows"
 project.ext.imguiVersion = '1.81.0'
+project.ext.javafxVersion = '17.0.8'
+
+def osName = System.getProperty('os.name').toLowerCase()
+def javafxPlatform = 'linux'
+if (osName.contains('win')) javafxPlatform = 'win'
+else if (osName.contains('mac')) javafxPlatform = 'mac'
 
 dependencies {
     // Box2D
@@ -52,6 +58,11 @@ dependencies {
     runtimeOnly "org.lwjgl:lwjgl-opengl::$lwjglNatives"
     runtimeOnly "org.lwjgl:lwjgl-stb::$lwjglNatives"
     implementation "org.joml:joml:${jomlVersion}"
+    // JavaFX (for ImGuiLayer font handling if required)
+    implementation "org.openjfx:javafx-controls:${project.ext.javafxVersion}"
+    implementation "org.openjfx:javafx-fxml:${project.ext.javafxVersion}"
+    runtimeOnly "org.openjfx:javafx-controls:${project.ext.javafxVersion}:${javafxPlatform}"
+    runtimeOnly "org.openjfx:javafx-fxml:${project.ext.javafxVersion}:${javafxPlatform}"
 }
 
 jar {
