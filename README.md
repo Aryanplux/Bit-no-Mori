@@ -44,7 +44,7 @@
 
 ---
 
-## 📋 Table of Contents
+## Table of Contents
 
 1. [Introduction](#-introduction)
 2. [Design Philosophy](#-design-philosophy)
@@ -70,7 +70,7 @@
 
 ---
 
-## 🔭 Introduction
+## Introduction
 
 **Bit-No-Mori** *(ビットの森 — Japanese: "Forest of Bits")* is a compact, intentionally approachable Java 2D game engine built from first principles. It does not wrap an existing engine — every core system, from the OpenGL render loop to the ImGui editor integration, is handcrafted and readable.
 
@@ -82,7 +82,7 @@ It ships with a fully featured **in-game level editor** that lets you place tile
 
 ---
 
-## 🎯 Design Philosophy
+## Design Philosophy
 
 ```
 THREE CORE PRINCIPLES THAT SHAPED EVERY DECISION IN BIT-NO-MORI
@@ -109,7 +109,7 @@ THREE CORE PRINCIPLES THAT SHAPED EVERY DECISION IN BIT-NO-MORI
 
 ---
 
-## 🏗️ Engine Architecture
+## Engine Architecture
 
 ### High-Level Architectural Overview
 
@@ -256,7 +256,7 @@ bit-no-mori/
 
 ---
 
-## 🔄 The Render & Update Loop
+## The Render & Update Loop
 
 The entire engine runtime lives inside `Window.loop()`. Every frame executes a fixed sequence of operations regardless of mode.
 
@@ -326,7 +326,7 @@ The entire engine runtime lives inside `Window.loop()`. Every frame executes a f
 
 ---
 
-## 🧩 Entity-Component System (ECS)
+## Entity-Component System (ECS)
 
 Bit-No-Mori implements a **lightweight, composition-based ECS**. Rather than deep inheritance hierarchies, all game object behavior is expressed through reusable, stackable `Component` instances attached to a `GameObject`.
 
@@ -404,7 +404,7 @@ Scene.load() called
 
 ---
 
-## 🖊️ In-Game Level Editor
+## In-Game Level Editor
 
 The level editor runs **inside the game window** — no separate editor application, no round-trip to external tools. Toggle between edit and play mode at any time with a single keypress.
 
@@ -487,7 +487,7 @@ ImGuiLayer.update()
 
 ---
 
-## 💾 Scene Persistence — Save & Load
+## Scene Persistence — Save & Load
 
 Bit-No-Mori uses **Gson with custom type adapters** to serialize the full scene graph into a human-readable JSON file.
 
@@ -556,7 +556,7 @@ LOAD FLOW
 
 ---
 
-## 🖥️ Renderer Pipeline
+## Renderer Pipeline
 
 The renderer uses **OpenGL via LWJGL** with a framebuffer-based deferred display model.
 
@@ -613,7 +613,7 @@ The renderer uses **OpenGL via LWJGL** with a framebuffer-based deferred display
 
 ---
 
-## ⚙️ Physics Layer
+## Physics Layer
 
 The `physics2d` package provides a lightweight 2D physics simulation sufficient for platformer-style gameplay.
 
@@ -650,7 +650,7 @@ Component Graph (Physics):
 
 ---
 
-## 🗄️ Asset Management
+## Asset Management
 
 `AssetPool` is the engine's **single source of truth for all runtime resources**. It caches every texture, shader, spritesheet, and sound by filepath, ensuring each asset is loaded from disk exactly once per session.
 
@@ -680,7 +680,7 @@ AssetPool — Resource Caching Strategy
 
 ---
 
-## ⌨️ Keyboard & Mouse Input
+## Keyboard & Mouse Input
 
 Both input systems are **static singletons** registered as GLFW callbacks on window creation. Any component anywhere in the codebase can query input state without holding a reference.
 
@@ -703,7 +703,7 @@ INPUT SYSTEM DESIGN
 
 ---
 
-## 🔧 Build & Run
+## Build & Run
 
 ### Requirements
 
@@ -756,7 +756,7 @@ public static final boolean RELEASE_BUILD = true;   // ← Release mode (ImGui h
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 bit-no-mori/
@@ -786,7 +786,7 @@ bit-no-mori/
 
 ---
 
-## 👨‍💻 Developer Guide — Extending the Engine
+## Developer Guide — Extending the Engine
 
 ### Create a New Component
 
@@ -891,7 +891,7 @@ Window.changeScene(new BossSceneInitializer());
 
 ---
 
-## ⌨️ Editor Shortcuts
+## Editor Shortcuts
 
 | Shortcut | Action |
 |:---:|---|
@@ -908,7 +908,7 @@ Window.changeScene(new BossSceneInitializer());
 
 ---
 
-## 🔍 Troubleshooting
+## Troubleshooting
 
 | Symptom | Cause | Fix |
 |---|---|---|
@@ -922,7 +922,7 @@ Window.changeScene(new BossSceneInitializer());
 
 ---
 
-## 🗺️ Roadmap
+## Roadmap
 
 ```
 Current State (v1.x)
@@ -959,7 +959,7 @@ Vision (v3.x)
 
 ---
 
-## 👤 Author
+## Author
 
 <br />
 
