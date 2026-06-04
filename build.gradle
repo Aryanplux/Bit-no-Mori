@@ -92,6 +92,13 @@ tasks.register('fatJar', Jar) {
         exclude "META-INF/*.DSA"
         exclude "META-INF/*.RSA"
     }
+    // include project assets and level file into the fat JAR so runtime finds them on classpath
+    from('assets') {
+        into 'assets'
+    }
+    from('level.txt') {
+        into ''
+    }
     with jar
     dependsOn(tasks.named('copyAssets'))
 }
